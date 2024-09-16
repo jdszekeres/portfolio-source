@@ -1,0 +1,26 @@
+@media (prefers-color-scheme: dark) {
+    body {
+        background: rgb(47,52,84);
+        background: radial-gradient(circle, rgba(47,52,84,1) 0%, rgba(68,82,120,1) 100%);
+    }
+}
+@media (prefers-color-scheme: light) {
+    body {
+        background: rgb(111,123,200);
+        background: radial-gradient(circle, rgba(111,123,200,1) 0%, rgba(96,122,190,1) 100%);
+    }
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
