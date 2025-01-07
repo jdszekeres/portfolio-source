@@ -2,12 +2,13 @@
 defineProps({
     link: String,
     image: String,
+    width: {type: String, default: '64px'}
 })
 </script>
 
 <template>
     <a :href="link" style="text-decoration: none; display: block;">
-        <img :src="image" alt="linkedin" style="width: 32px;" />
+        <img :src="image" :alt="'Logo for' + image" :style="'width:'+width+';'" />
         &nbsp;
     </a>
 </template>

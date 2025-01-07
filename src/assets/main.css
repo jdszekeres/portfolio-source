@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+
 @media (prefers-color-scheme: dark) {
     body {
         background: rgb(47,52,84);
@@ -17,10 +19,26 @@ a,
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
 }
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+.pulse {
+  display: block !important;
+  animation: pulse 5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1.2) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.5) translate(0, 10px);
+  }
+  100% {
+    transform: scale(1.2) translate(0,0);
   }
 }
-
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url(Roboto-Condensed.ttf);
+  unicode-range: U+0030-007F;
+}
+.emoji {
+  font-family: "Roboto Condensed", "Noto Color Emoji";
+}
