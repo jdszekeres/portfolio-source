@@ -315,7 +315,7 @@ function filterProjects(category) {
             <div style="width: 50vw; height: 90%; display: flex; justify-content: end; flex-wrap: wrap;">
                 <h3 style="text-align: center; width: 100%">You can look for me here:</h3>
                 <div style="display: flex; justify-content: center; width: 100%; align-content: start">
-                    <imagelink link="www.linkedin.com/in/jdszekeres" image="LI-logo.png" />
+                    <imagelink link="https://www.linkedin.com/in/jdszekeres" image="LI-logo.png" />
                     <imagelink link="https://github.com/jdszekeres" image="github-mark.svg" />
                     <imagelink link="https://github.com/CCA-AppDev" image="cca-appdev.png"/> 
                     <imagelink link="https://leetcode.com/u/jdszekeres/" image="leetcode.png" />
