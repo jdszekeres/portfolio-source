@@ -268,8 +268,17 @@ const projects = ref([
         image: "https://repository-images.githubusercontent.com/874544784/e30592d3-9781-42f5-a250-89fe50524067",
         description: "A github template that allows you to customize the game 2048 to your liking",
         repo: "https://github.com/jdszekeres/custom-2048"
+    },
+    {
+        name: "We Didn't Start the Fire Explainer",
+        skills: "UI Design, copilot, srt",
+        categories: "c",
+        link: "https://jdszekeres.github.io/we-didnt-start-the-fire-explainer",
+        image: "https://jdszekeres.github.io/project-photos/we-didnt-start-the-fire-explainer.png",
+        description: "A site that explains all the references in the song We Didn't Start the Fire",
+        repo: "https://github.com/jdszekeres/we-didnt-start-the-fire-explainer"
     }
-]);
+].reverse());
 let filteredCategories = ref([]);
 let filteredProjects = ref(projects.value);
 function filterProjects(category) {
