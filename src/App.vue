@@ -274,9 +274,18 @@ const projects = ref([
         skills: "UI Design, copilot, srt",
         categories: "c",
         link: "https://jdszekeres.github.io/we-didnt-start-the-fire-explainer",
-        image: "https://jdszekeres.github.io/project-photos/we-didnt-start-the-fire-explainer.png",
+        image: "https://jdszekeres.github.io/project-photos/weDidntStartTheFireExplainer.png",
         description: "A site that explains all the references in the song We Didn't Start the Fire",
         repo: "https://github.com/jdszekeres/we-didnt-start-the-fire-explainer"
+    },
+    {
+        name: "Window View",
+        skills: "flutter,ios,app store connect,api,UI/UX design,accessibility",
+        categories: "c a fav",
+        link: "https://jdszekeres.github.io/window-view.html",
+        image: "https://jdszekeres.github.io/project-photos/windowViewWide.png",
+        description: "An app that allows you to see the points of interest outside of your window",
+
     }
 ].reverse());
 let filteredCategories = ref([]);
