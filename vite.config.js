@@ -9,10 +9,22 @@ export default defineConfig({
   server: {
     host: true
   },
-  plugins: [vue(),viteSingleFile()],
+
+  plugins: [vue(), viteSingleFile()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build: {
+    target: 'es2015',
+    minify: 'terser',
+    cssMinify: true,
+    rollupOptions: {
+
+    }
+  },
+  optimizeDeps: {
+    include: ['vue']
   }
 })

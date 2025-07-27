@@ -4,13 +4,41 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- DNS prefetch for external domains -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//raw.githubusercontent.com" />
+    <link rel="dns-prefetch" href="//github-readme-stats.vercel.app" />
+    <link rel="dns-prefetch" href="//jdszekeres.github.io" />
+    <link rel="dns-prefetch" href="//placeholder.co" />
+
+    <!-- Preconnect to critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload critical fonts -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@500;800&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@500;800&display=swap"
+    /></noscript>
+
     <title>My Projects</title>
   </head>
   <body style="overflow-x: hidden">
     <div id="app"></div>
   </body>
   <script src="src/main.js" type="module"></script>
+  <script src="https://bundle.run/css-scroll-snap-polyfill@0.1.2"></script>
+
   <script>
+    cssScrollSnapPolyfill();
     class Messenger {
       constructor(el) {
         this.el = el;

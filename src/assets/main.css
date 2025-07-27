@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
-
+/* Remove blocking font import and use system fallbacks */
 @media (prefers-color-scheme: dark) {
     body {
         background: rgb(47,52,84);
         background: radial-gradient(circle, rgba(47,52,84,1) 0%, rgba(68,82,120,1) 100%);
+        color: rgb(23, 23, 23);
     }
 }
 @media (prefers-color-scheme: light) {
     body {
         background: rgb(111,123,200);
         background: radial-gradient(circle, rgba(111,123,200,1) 0%, rgba(96,122,190,1) 100%);
+        color: white
     }
 }
 
@@ -34,11 +35,39 @@ a,
     transform: scale(1.2) translate(0,0);
   }
 }
+main {
+  scroll-snap-type: mandatory;
+  scroll-snap-points-y: repeat(100vh);
+  scroll-snap-type: y mandatory;
+
+}
+section {
+  padding: 1rem;
+  height: 100vh;
+  scroll-snap-align: start;
+  text-align: center;
+  position: relative;
+}
+/* Optimize font loading with fallbacks */
 @font-face {
   font-family: 'Roboto Condensed';
   src: url(Roboto-Condensed.ttf);
   unicode-range: U+0030-007F;
+  font-display: swap;
 }
+
 .emoji {
-  font-family: "Roboto Condensed", "Noto Color Emoji";
+  font-family: "Roboto Condensed", "Roboto", "Arial", system-ui, "Noto Color Emoji";
+}
+
+/* Add image optimization */
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+/* Prevent layout shift */
+.item img {
+  aspect-ratio: 16/9;
+  object-fit: cover;
 }
