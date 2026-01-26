@@ -288,5 +288,14 @@ export const projects = [
         link: "https://calories-app-e995f.web.app/",
         image: "https://jdszekeres.github.io/project-photos/calorieTracker.png",
         description: "An app that allows you to track your calories and other nutrition information",
+    },
+    {
+        name: "Enraged Libs",
+        skills: "react,APIS,AI coding",
+        categories: "c",
+        link: "https://jdszekeres.github.io/mad-libs",
+        image: "https://jdszekeres.github.io/project-photos/enraged-libs.png",
+        description: "A mad libs site",
+        repo: "https://github.com/jdszekeres/mad-libs"
     }
 ];

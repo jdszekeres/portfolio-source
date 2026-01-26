@@ -6,7 +6,7 @@ import PixelArray from './components/pixelArray.vue';
 import Menu from './components/Menu.vue';
 
 // Vue imports
-import { ref, computed } from 'vue';
+// import { ref, computed } from 'vue';
 
 // Data and composable imports
 import { projects as projectsData } from './data/projects.js';
@@ -37,6 +37,8 @@ import {
     
 
 } from '@tabler/icons-vue';
+import JobTile from './components/jobTile.vue';
+import BigProject from './components/bigProject.vue';
 // Use the projects composable
 const {
     projects,
@@ -53,32 +55,99 @@ const {
     <main>
         <!-- Hero Section -->
         <section id="hero" class="intro-section">
-            <h1 style="margin: 0">👋Hi, I'm jdszekeres👋</h1>
+            <div style="margin:0; background-image: linear-gradient(0deg, rgba(255,255,255,0.5), 0%,rgba(255,255,255,0), 100%); background-color: rgba(255,255,255,0.25);">
+                <h1 style="margin:0">Jackson Szekeres</h1>
+                <h2 style="margin:0">Computer Science and Engineering Portfolio</h2>
+            </div>
             
             <!-- Social Links -->
-            <div class="social-links">
+            <!-- <div class="social-links">
                 <ImageLink link="https://www.linkedin.com/in/jdszekeres" image="LI-logo.png" />
                 <ImageLink link="https://github.com/jdszekeres" image="github-mark.svg" />
                 <ImageLink link="https://github.com/CCA-AppDev" image="cca-appdev.png"/> 
                 <ImageLink link="https://leetcode.com/u/jdszekeres/" image="leetcode.png" />
-            </div>
+            </div> -->
             
-            <!-- Featured Projects -->
-            <div class="featured-projects">
-                <img src="https://github-readme-stats.vercel.app/api/pin/?username=jdszekeres&repo=top-down-geo-guesser&theme=radical" 
-                     loading="lazy" decoding="async" alt="Top Down Geography Guesser" />
-                <img src="https://github-readme-stats.vercel.app/api/pin/?username=jdszekeres&repo=custom-2048&theme=radical" 
-                     loading="lazy" decoding="async" alt="Custom 2048" />
-            </div>
-                
-            <PixelArray />
             
-            <h2>Making the blinky lights look good since 2017</h2>
         </section>
 
-        <!-- About & Experience Section -->
-        <section id="about" class="about-section" style="flex-direction: column; align-items: center; gap: 2rem">
+       
+
+        <section id="experience" class="experience-section">
             <Menu />
+            <div class="experience-content">
+                <h3>Past Experience</h3>
+                <ul class="experience-list">
+                    
+                    <JobTile
+                        title="Advanced Enginnering Student"
+                        company="Family Giving Tree"
+                        timePeriod="Fall 2025"
+                        description="Developed a RFID scanning system for Family Giving Tree, a Bay Area non-profit, as part of an in-school internship"
+                        image="https://jdszekeres.github.io/company_logos/fgt.png"
+                    />
+                    <JobTile
+                        title="VP - CCA Hack Club"
+                        company="CCA Hack Club"
+                        timePeriod="2023 - Present"
+                        description="Hosted and competed in hackathons, organized coding events, and fostered a collaborative environment for club members."
+                        image="https://jdszekeres.github.io/company_logos/appdev.png"
+                    />
+
+                    <JobTile
+                        title="Intern"
+                        company="Deep Water Exploration"
+                        timePeriod="2024, 2025"
+                        description="Developed industry-grade software solutions for defense and exploration applications."
+                        image="https://jdszekeres.github.io/company_logos/dwe.png"
+                    />
+
+                    <JobTile
+                        title="CEO"
+                        company="Smart DC Solutions"
+                        timePeriod="2023 - Present"
+                        description="Led a diverse team of peers to develop a novel, patent pending solution for blackouts and power efficiency."
+                        image="https://jdszekeres.github.io/company_logos/sds.png"
+                    />
+
+                    <JobTile
+                        title="CTO"
+                        company="Compete for Causes"
+                        timePeriod="2023 - Present"
+                        description="Led the development of a platform connecting physical activities with charitable causes."
+                        image="https://jdszekeres.github.io/company_logos/cfc.png"
+                    />
+
+                    <JobTile
+                        title="Exploring Computer Science Student"
+                        company="CCA"
+                        timePeriod="Spring 2025"
+                        description="Engaged in hands-on projects and collaborative learning experiences with focus on HCI interactions and web app development."
+                        image="https://jdszekeres.github.io/company_logos/cca.png"
+                    />
+
+                    <JobTile
+                        title="Digital Electronics Student"
+                        company="CCA"
+                        timePeriod="Fall 2025"
+                        description="Studied the principles of digital circuits and logic gates."
+                        image="https://jdszekeres.github.io/company_logos/cca.png"
+                    />
+
+                    <JobTile
+                        title="AP Computer Science Principles Student"
+                        company="CCA"
+                        timePeriod="2025"
+                        description="Demonstrated exceptional understanding of computer science concepts."
+                        image="https://jdszekeres.github.io/company_logos/cca.png"
+                    />
+                </ul>
+
+            </div>
+        </section> 
+
+         <!-- About & Experience Section -->
+        <section id="about" class="about-section" style="flex-direction: column; align-items: center; gap: 2rem">
             <div class="about-content" style="display: flex; flex-direction: column; gap: 1rem; width: 100%">
                 <h3 style="width: 100%">About</h3>
                 <div class="about-text emoji" style="font-size: x-large">
@@ -129,27 +198,42 @@ const {
                 </div>
             </div>
         </section>
-
-        <section id="experience" class="experience-section">
-            <!-- <Menu /> -->
-            <div class="experience-content">
-                <h3>Past Experience</h3>
-                <ul class="experience-list">
-                    <li><strong>Internship at Deep Water Exploration (2024, 2025)</strong><br />Developed industry-grade software solutions for defense and exploration applications.</li>
-                    <li><strong>CEO - <a href="https://smartdcsolutions.com/" style="color: unset; font-size: unset;">Smart DC Solutions</a></strong><br />Led a diverse team of peers to develop a novel, patent pending solution for blackouts and power efficiency.</li>
-                    <li><strong>CTO - <a href="https://competeforcauses.com/" style="color: unset; font-size: unset;">Compete for Causes</a></strong><br />Led the development of a platform connecting physical activities with charitable causes.</li>
-                    <li><strong>Exploring Computer Science (Spring 2025)</strong><br />Engaged in hands-on projects and collaborative learning experiences with focus on HCI interactions and web app development.</li>
-                    <li><strong>Digital Electronics (Fall 2025)</strong><br />Studied the principles of digital circuits and logic gates.</li>
-                    <li><strong>AP Computer Science Principles (2025, 5)</strong><br />Demonstrated exceptional understanding of computer science concepts.</li>
-                    <li><strong>VP - App Development Club</strong><br />Led the development of an app for my school</li>
-                </ul>
-            </div>
-        </section> 
         
+        <section id="select-project">
+            <h1>Select Projects</h1>
+            <BigProject 
+                name="Window View" 
+                link="https://apps.apple.com/us/app/window-view/id6740445055" 
+                subtitle="iOS app to view POIs offline" 
+                description="An app built in Flutter to view points of interest on the go, without internet using a database of over 200,000 POIs worldwide and a custom built flight plan generator. The app is in part inspired by 'Flying Over Places' feature of Flight Path 3D's maps. The project has nearly 250 downloads and has made $10 in ad revenue so far. The app builds off skills learned from Exploring Computer Science, including firebase and HCI design principles." 
+                image="https://jdszekeres.github.io/project-photos/windowViewWide.png" 
+                skills="App Development, Flutter, AI Assisted Programming, Google AdMob"
+            />
+
+            <BigProject
+                name="Eagle Scout Project"
+                link="https://www.scouting.org/about/research/eagle-scouts/"
+                subtitle="Community service project for San Dieguito County Park"
+                description="Led a project to create a 15ft tall hanging sign with chains, wood slab, and natural materials for the entrance of the Nature Playground area at San Dieguito County Park. Managed a team of 10 volunteers, coordinated with park officials, and ensured the project met safety and quality standards. The sign enhances the park's entrance and provides a welcoming atmosphere for visitors."
+                image="https://jdszekeres.github.io/project-photos/eagle_scout.JPG"
+                skills="Project Management, Woodworking, Team Leadership"
+                left="true"
+            />
+
+            <BigProject
+                name="Smartlet Pending Patent"
+                subtitle='"Method and apparatus to supply DC power with variable voltage."'
+                link="https://patents.google.com/patent/US20240421609A1/en"
+                description="Led a team of peers to develop a novel solution for improving power efficiency and safety, increasing IoT integration, and preventing blackouts in residential and commercial buildings. The Smartlet system intelligently manages DC power distribution, optimizing energy usage and reducing strain on the electrical grid. The project is currently patent pending and has garnered interest from industry professionals at the Open Sauce 2025 Convention."
+                image="https://jdszekeres.github.io/project-photos/patent.jpg"
+                skills="Electrical Engineering, Team Leadership, Innovation, Technical Writing"
+            />
+        </section>
+
         <!-- Projects Section -->
         <section id="projects" class="projects-section">
             <!-- <Menu /> -->
-             <h3>Projects</h3>
+             <h3>All Projects</h3>
             <p>Filter my projects by category</p>
 
             <!-- Category Filters -->
@@ -198,11 +282,17 @@ const {
 
 .intro-section {
     height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: space-between;
+    justify-content: space-between;
     text-align: center;
+    background-image: url('https://jdszekeres.github.io/title.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0;
+    margin: 0;
 }
 
 .about-section {
@@ -216,6 +306,11 @@ const {
     flex: 1;
     display: flex;
     flex-direction: column;
+}
+
+.experience-column {
+    height: fit-content !important;
+    min-height: fit-content !important;
 }
 
 .projects-section {
