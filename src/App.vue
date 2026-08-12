@@ -56,6 +56,15 @@ const {
                 <h2 style="margin:0">Computer Science and Engineering Portfolio</h2>
             </div>
 
+            <div id="scroll_down_hint" style="background-image: linear-gradient(0deg, rgba(255,255,255,0.5), 0%,rgba(255,255,255,0), 100%); background-color: rgba(255,255,255,0.25);">
+                <p style="color: black; margin: 0">Scroll down to explore my work</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-chevron-down">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </div>
+
             <!-- Social Links -->
             <!-- <div class="social-links">
                 <ImageLink link="https://www.linkedin.com/in/jdszekeres" image="LI-logo.png" />
@@ -68,50 +77,9 @@ const {
         </section>
 
 
-
-        <section id="experience" class="experience-section">
-            <Menu />
-            <div class="experience-content">
-                <h3>Past Experience</h3>
-                <ul class="experience-list">
-
-                    <JobTile title="Advanced Enginnering Student" company="Family Giving Tree" timePeriod="Fall 2025"
-                        description="Developed a RFID scanning system for Family Giving Tree, a Bay Area non-profit, as part of an in-school internship"
-                        image="https://jdszekeres.github.io/company_logos/fgt.png" />
-                    <JobTile title="VP - CCA Hack Club" company="CCA Hack Club" timePeriod="2023 - Present"
-                        description="Hosted and competed in hackathons, organized coding events, and fostered a collaborative environment for club members."
-                        image="https://jdszekeres.github.io/company_logos/appdev.png" />
-
-                    <JobTile title="Intern" company="Deep Water Exploration" timePeriod="2024, 2025"
-                        description="Developed industry-grade software solutions for defense and exploration applications."
-                        image="https://jdszekeres.github.io/company_logos/dwe.png" />
-
-                    <JobTile title="CEO" company="Smart DC Solutions" timePeriod="2023 - Present"
-                        description="Led a diverse team of peers to develop a novel, patent pending solution for blackouts and power efficiency."
-                        image="https://jdszekeres.github.io/company_logos/sds.png" />
-
-                    <JobTile title="CTO" company="Compete for Causes" timePeriod="2023 - Present"
-                        description="Led the development of a platform connecting physical activities with charitable causes."
-                        image="https://jdszekeres.github.io/company_logos/cfc.png" />
-
-                    <JobTile title="Exploring Computer Science Student" company="CCA" timePeriod="Spring 2025"
-                        description="Engaged in hands-on projects and collaborative learning experiences with focus on HCI interactions and web app development."
-                        image="https://jdszekeres.github.io/company_logos/cca.png" />
-
-                    <JobTile title="Digital Electronics Student" company="CCA" timePeriod="Fall 2025"
-                        description="Studied the principles of digital circuits and logic gates."
-                        image="https://jdszekeres.github.io/company_logos/cca.png" />
-
-                    <JobTile title="AP Computer Science Principles Student" company="CCA" timePeriod="2025"
-                        description="Demonstrated exceptional understanding of computer science concepts, scoring a 5 on the official AP exam."
-                        image="https://jdszekeres.github.io/company_logos/cca.png" />
-                </ul>
-
-            </div>
-        </section>
-
         <!-- About & Experience Section -->
         <section id="about" class="about-section" style="flex-direction: column; align-items: center; gap: 2rem">
+            <Menu />
             <div class="about-content" style="display: flex; flex-direction: column; gap: 1rem; width: 100%">
                 <h3 style="width: 100%">About</h3>
                 <div class="about-text emoji" style="font-size: x-large">
@@ -199,6 +167,47 @@ const {
             </div>
         </section>
 
+        <section id="experience" class="experience-section">
+            <div class="experience-content">
+                <h3>Past Experience</h3>
+                <ul class="experience-list">
+                    <JobTile title="Intern" company="Deep Water Exploration" timePeriod="2024, 2025"
+                        description="Developed industry-grade software solutions for defense and exploration applications."
+                        image="https://jdszekeres.github.io/company_logos/dwe.png" />
+
+                    <JobTile title="Advanced Enginnering Student" company="Family Giving Tree" timePeriod="Fall 2025"
+                        description="Developed a RFID scanning system for Family Giving Tree, a Bay Area non-profit, as part of an in-school internship"
+                        image="https://jdszekeres.github.io/company_logos/fgt.png" />
+
+                    <JobTile title="Assistant Code Coach" company="The Coder School" timePeriod="Summer 2026"
+                        description="Assisted young students in developing an understanding of advanced programming concepts like AI regressions and functional programming"
+                        image="https://jdszekeres.github.io/company_logos/tcs.png" />
+
+                    <JobTile title="VP - CCA Hack Club" company="CCA Hack Club" timePeriod="2023 - Present"
+                        description="Hosted and competed in hackathons, organized coding events, and fostered a collaborative environment for club members."
+                        image="https://jdszekeres.github.io/company_logos/appdev.png" />
+
+
+                    <JobTile title="CEO" company="Smart DC Solutions" timePeriod="2023 - Present"
+                        description="Led a diverse team of peers to develop a novel, patent pending solution for blackouts and power efficiency."
+                        image="https://jdszekeres.github.io/company_logos/sds.png" />
+
+                    <JobTile title="CTO" company="Compete for Causes" timePeriod="2023 - Present"
+                        description="Led the development of a platform connecting physical activities with charitable causes."
+                        image="https://jdszekeres.github.io/company_logos/cfc.png" />
+
+                    <JobTile title="Exploring Computer Science Student" company="CCA" timePeriod="Spring 2025"
+                        description="Engaged in hands-on projects and collaborative learning experiences with focus on HCI interactions and web app development."
+                        image="https://jdszekeres.github.io/company_logos/cca.png" />
+
+                    <JobTile title="AP Computer Science Principles Student" company="CCA" timePeriod="Spring 2025"
+                        description="Demonstrated exceptional understanding of computer science concepts, scoring a 5 on the official AP exam."
+                        image="https://jdszekeres.github.io/company_logos/cca.png" />
+                </ul>
+
+            </div>
+        </section>
+
         <section id="select-project">
             <h1>Select Projects</h1>
             <BigProject name="Window View" link="https://apps.apple.com/us/app/window-view/id6740445055"
@@ -219,7 +228,15 @@ const {
                 description="Led a team of peers to develop a novel solution for improving power efficiency and safety, increasing IoT integration, and preventing blackouts in residential and commercial buildings. The Smartlet system intelligently manages DC power distribution, optimizing energy usage and reducing strain on the electrical grid. The project is currently patent pending and has garnered interest from industry professionals at the Open Sauce 2025 Convention."
                 image="https://jdszekeres.github.io/project-photos/patent.jpg"
                 skills="Electrical Engineering, Team Leadership, Innovation, Technical Writing" />
-        </section>
+        
+            <BigProject name="Astrophotography Tools"
+                subtitle="An offline website to capture the night sky"
+                link="https://astrophoto-tools.vercel.app/"
+                description="An offline website built for both pros and amateurs with HTML, CSS and Javascript to help plan and execute astrophotography sessions. The website was created as part of the Hack Club + NASA Stardance challenge, where it won the Super Star Project Award and I got to ask NASA Director Jared Isaacman about satelite light pollution and protecting the night sky."
+                image="https://jdszekeres.github.io/project-photos/astrophototools.png"
+                skills="Web Development, Service Workers, Mobile Optimization, UX/UI Design" left="true" />
+
+            </section>
 
         <!-- Projects Section -->
         <section id="projects" class="projects-section">

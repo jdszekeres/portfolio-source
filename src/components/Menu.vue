@@ -1,8 +1,9 @@
 <template>
     <nav class="menu">
-        <a href="#experience" class="menu-item">Experience</a>
         <a href="#about" class="menu-item">About</a>
+        <a href="#experience" class="menu-item">Experience</a>
         <a href="#select-project" class="menu-item">Projects</a>
+
     </nav>
 </template>
 

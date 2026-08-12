@@ -297,5 +297,13 @@ export const projects = [
         image: "https://jdszekeres.github.io/project-photos/enraged-libs.png",
         description: "A mad libs site",
         repo: "https://github.com/jdszekeres/mad-libs"
+    },
+    {
+        name: "Astrophotography Tools",
+        skills: "HTML,CSS,Javascript,Service Workers,Mobile Optimization,UX/UI Design",
+        categories: "c a fav",
+        link: "https://astrophoto-tools.vercel.app/",
+        image: "https://jdszekeres.github.io/project-photos/astrophototools.png",
+        description: "An offline PWA to help plan and execute astrophotography sessions. The website was created as part of the Hack Club + NASA Stardance challenge, where it won the Super Star Project Award and I got to ask NASA Director Jared Isaacman about satelite light pollution and protecting the night sky."
     }
 ];
