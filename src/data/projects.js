@@ -244,7 +244,7 @@ export const projects = [
         categories: "c g a fav",
         link: "https://top-down-geo-guesser.vercel.app/",
         image: "https://jdszekeres.github.io/project-photos/geo-guesser.png",
-        description: "A site similar to geo guesser, but it presents locations in the form of tiles",
+        description: "A site similar to geo guesser, but it presents locations in the form of top-down satelite imagery",
         repo: "https://github.com/jdszekeres/top-down-geo-guesser"
     },
     {
@@ -271,7 +271,7 @@ export const projects = [
         categories: "c a fav",
         link: "https://jdszekeres.github.io/window-view.html",
         image: "https://jdszekeres.github.io/project-photos/windowViewWide.png",
-        description: "An app that allows you to see the points of interest outside of your window",
+        description: "An app that allows you to see the points of interest outside of your window all without wifi",
     },
     {
         name: "Motivate Me",
@@ -287,7 +287,7 @@ export const projects = [
         categories: "c",
         link: "https://calories-app-e995f.web.app/",
         image: "https://jdszekeres.github.io/project-photos/calorieTracker.png",
-        description: "An app that allows you to track your calories and other nutrition information",
+        description: "An app that allows you to track your calories and other nutrition information using AI or by scanning barcodes. The app also allows you to set goals and track your progress over time.",
     },
     {
         name: "Enraged Libs",
@@ -295,7 +295,7 @@ export const projects = [
         categories: "c",
         link: "https://jdszekeres.github.io/mad-libs",
         image: "https://jdszekeres.github.io/project-photos/enraged-libs.png",
-        description: "A mad libs site",
+        description: "A mad libs site that auto populated suggested words for each part of speech",
         repo: "https://github.com/jdszekeres/mad-libs"
     },
     {

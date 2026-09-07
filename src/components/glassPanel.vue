@@ -12,16 +12,17 @@
             type: String,
             default: '0'
         },
-        style: {
+        styles: {
             type: Object,
             default: () => ({})
         }
     })
 </script>
 
+
 <template>
-    <div :style="{ width: width, height: height, padding: padding, ...style }" class="glass-panel">
-        <div :style="{ width: width, height: height, padding: padding, ...style }" class="glass-panel-content">
+    <div :style="{ width: width, height: height, padding: padding, ...styles }" class="glass-panel">
+        <div :style="{ width: width, height: height, padding: padding, ...styles }" class="glass-panel-content">
             <slot />
         </div>
     </div>

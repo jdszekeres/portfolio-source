@@ -25,7 +25,11 @@
                 <h4>{{company}} | {{timePeriod}}</h4>
             </div>
             </div>
-            <p>{{description}}</p>
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <div style="width: 60%">
+                    <p>{{description}}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -34,4 +38,16 @@
     div > h2, div > h4, div > p {
         margin: 0;
     }
+
+    h2, h4, p {
+        color: #ccc;
+    }
+
+    h2, p {
+        font-family: sans-serif;
+    }
+    p {
+        font-weight: 400;
+    }
+
 </style>

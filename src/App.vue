@@ -6,7 +6,7 @@ import PixelArray from './components/pixelArray.vue';
 import Menu from './components/Menu.vue';
 
 // Vue imports
-// import { ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 
 // Data and composable imports
 import { projects as projectsData } from './data/projects.js';
@@ -45,21 +45,79 @@ const {
     loadMoreProjects,
     filterProjects
 } = useProjects(projectsData);
+
+var pixelSize = 50; // Size of the pixel blocks for the pixelation effect
+
+setTimeout(() => {
+    for (var i = 0; i < 50 ; i++) {
+        setTimeout(() => {
+            const morphology = document.getElementById("morphology");
+            const rad = morphology.getAttribute("radius");
+            pixelSize = Math.max(1, morphology.getAttribute("radius") - 1); // Decrease pixel size gradually
+            morphology.setAttribute("radius", pixelSize);
+            if (pixelSize <= 1) {
+                morphology.parentElement.parentElement.remove(); // Remove the filter from the DOM when pixelation is complete
+                clearInterval();
+            }
+            console.log("Pixel size:", pixelSize);
+        }, i * 40); // Adjust the speed of the animation by changing the multiplier
+    }
+})
+
+const gridStyle = computed(() => {
+  const size = pixelSize;
+  return {
+    // Sharp retro rendering
+    imageRendering: 'pixelated',
+    // Shrink the native GIF using background-size to force pixelation
+    backgroundSize: `${size}px ${size}px`,
+    // Apply a repeating grid overlay on top of the GIF background
+    backgroundImage: `
+      linear-gradient(to right, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
+      url('https://giphy.com')
+    `
+  }
+})
 </script>
 
 <template>
+    <svg class="hidden-svg" style="position: absolute; z-index: -1;">
+      <defs>
+        
+        <filter id="pixelate-filter" x="0%" y="0%" width="100%" height="100%">
+          <!-- 1. Map input to a discrete grid -->
+          <feGaussianBlur stdDeviation="0" />
+          <feComponentTransfer>
+            <feFuncR type="discrete" tableValues="0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9" />
+            <feFuncG type="discrete" tableValues="0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9" />
+            <feFuncB type="discrete" tableValues="0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9" />
+          </feComponentTransfer>
+          <feMorphology id="morphology" operator="dilate" :radius="pixelSize / 2" />
+
+        </filter>
+      </defs>
+    </svg>
     <main>
         <!-- Hero Section -->
         <section id="hero" class="intro-section">
+            <div :style="gridStyle" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+                <img 
+                    src="https://jdszekeres.github.io/title.gif" 
+                    style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;" 
+                    :style="{filter: `url('#pixelate-filter')`}"
+                   
+                />
+            </div>
             <GlassPanel width="100%" height="20%">
                 <h1 style="margin:0; padding: 0">Jackson Szekeres</h1>
                 <h2 style="margin:0">Computer Science and Engineering Portfolio</h2>
             </GlassPanel>
 
             
-            <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2rem">
+            <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2rem;">
                 <div>
-                    <GlassPanel padding="8px" style="{align-items: 'center'}">
+                    <GlassPanel padding="8px">
                     <p style="color: black; margin: 0">Scroll down to explore my work</p>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -188,7 +246,7 @@ const {
                         description="Assisted young students in developing an understanding of advanced programming concepts like AI regressions and functional programming"
                         image="https://jdszekeres.github.io/company_logos/tcs.png" />
 
-                    <JobTile title="VP - CCA Hack Club" company="CCA Hack Club" timePeriod="2023 - Present"
+                    <JobTile title="President" company="CCA Hack Club" timePeriod="2023 - Present"
                         description="Hosted and competed in hackathons, organized coding events, and fostered a collaborative environment for club members."
                         image="https://jdszekeres.github.io/company_logos/appdev.png" />
 
@@ -295,9 +353,8 @@ const {
     align-items: space-between;
     justify-content: space-between;
     text-align: center;
-    background-image: url('https://jdszekeres.github.io/title.gif');
-    background-repeat: no-repeat;
-    background-size: cover;
+    
+
     padding: 0;
     margin: 0;
 }
