@@ -15,6 +15,7 @@ import { useProjects } from './composables/useProjects.js';
 import JobTile from './components/jobTile.vue';
 import BigProject from './components/bigProject.vue';
 import Skill from './components/skill.vue';
+import GlassPanel from './components/glassPanel.vue';
 
 import {
     IconBrandFlutter,
@@ -50,19 +51,23 @@ const {
     <main>
         <!-- Hero Section -->
         <section id="hero" class="intro-section">
-            <div
-                style="margin:0; background-image: linear-gradient(0deg, rgba(255,255,255,0.5), 0%,rgba(255,255,255,0), 100%); background-color: rgba(255,255,255,0.25);">
-                <h1 style="margin:0">Jackson Szekeres</h1>
+            <GlassPanel width="100%" height="20%">
+                <h1 style="margin:0; padding: 0">Jackson Szekeres</h1>
                 <h2 style="margin:0">Computer Science and Engineering Portfolio</h2>
-            </div>
+            </GlassPanel>
 
-            <div id="scroll_down_hint" style="background-image: linear-gradient(0deg, rgba(255,255,255,0.5), 0%,rgba(255,255,255,0), 100%); background-color: rgba(255,255,255,0.25);">
-                <p style="color: black; margin: 0">Scroll down to explore my work</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-chevron-down">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+            
+            <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2rem">
+                <div>
+                    <GlassPanel padding="8px" style="{align-items: 'center'}">
+                    <p style="color: black; margin: 0">Scroll down to explore my work</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-chevron-down">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                    </GlassPanel>
+                </div>
             </div>
 
             <!-- Social Links -->
@@ -83,7 +88,7 @@ const {
             <div class="about-content" style="display: flex; flex-direction: column; gap: 1rem; width: 100%">
                 <h3 style="width: 100%">About</h3>
                 <div class="about-text emoji" style="font-size: x-large">
-                    I am a rising Junior in High School with an interest in Computer Science🧑‍💻, aviation✈️,
+                    I am a senior in High School with an interest in Computer Science🧑‍💻, aviation✈️,
                     Geography🗺️, and 3D printing <img
                         src="https://emojis.slackmojis.com/emojis/images/1702933057/82860/3d-printer.png"
                         style="width: 24px; height: 24px">. My favorite programming languages are
