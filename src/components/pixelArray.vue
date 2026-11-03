@@ -11,19 +11,19 @@ defineProps({
         <div class="pixel-row" v-bind:style="{ height: 'calc(40vh / ' + pixelData.drawing.length + ')' }" v-for="(row, rowIndex) in pixelData.drawing" :key="rowIndex">
             <div class="pixel" v-bind:style="{ 
                 height: 'calc(40vh / ' + pixelData.drawing.length + ')', 
-                width: 'calc(40vh / ' + pixelData.drawing.length + ' * ' + pixelData.drawing[0].length + ' / ' + pixelData.drawing.length + ')' 
-            }" v-for="(pixel, colIndex) in row" :key="colIndex" :style="{ backgroundColor: pixelData.colors[pixel] }"></div>
+                width: 'calc(40vh / ' + pixelData.drawing.length + ' * ' + pixelData.drawing[0].length + ' / ' + pixelData.drawing.length + ')',
+                backgroundColor: pixelData.colors[pixel] 
+            }" v-for="(pixel, colIndex) in row" :key="colIndex"></div>
         </div>
     </div>
 </template>
-
 <style>
 .pixel-array {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
+/* Pixel Array Styles */
 .pixel-row {
     display: flex;
 }

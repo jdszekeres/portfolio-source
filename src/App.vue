@@ -47,7 +47,7 @@ const {
 } = useProjects(projectsData);
 
 var pixelSize = 50; // Size of the pixel blocks for the pixelation effect
-
+// Animation to reduce pixelation over time. For some reason animate in <svg> does not work with vue, so I'm using this hacky setTimeout method to animate the pixelation effect.
 setTimeout(() => {
     for (var i = 0; i < 50 ; i++) {
         setTimeout(() => {
@@ -60,25 +60,10 @@ setTimeout(() => {
                 clearInterval();
             }
             console.log("Pixel size:", pixelSize);
-        }, i * 40); // Adjust the speed of the animation by changing the multiplier
+        }, i * 10); // Adjust the speed of the animation by changing the multiplier
     }
 })
 
-const gridStyle = computed(() => {
-  const size = pixelSize;
-  return {
-    // Sharp retro rendering
-    imageRendering: 'pixelated',
-    // Shrink the native GIF using background-size to force pixelation
-    backgroundSize: `${size}px ${size}px`,
-    // Apply a repeating grid overlay on top of the GIF background
-    backgroundImage: `
-      linear-gradient(to right, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
-      url('https://giphy.com')
-    `
-  }
-})
 </script>
 
 <template>
@@ -86,13 +71,14 @@ const gridStyle = computed(() => {
       <defs>
         
         <filter id="pixelate-filter" x="0%" y="0%" width="100%" height="100%">
-          <!-- 1. Map input to a discrete grid -->
           <feGaussianBlur stdDeviation="0" />
           <feComponentTransfer>
+            <!-- Map the color to a discrete map, but don't make the map too discrete or it looks terrible. 3 channels ** 10 options = 59,000 color -->
             <feFuncR type="discrete" tableValues="0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9" />
             <feFuncG type="discrete" tableValues="0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9" />
             <feFuncB type="discrete" tableValues="0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9" />
           </feComponentTransfer>
+          <!-- This is what does the pixelation effect -->
           <feMorphology id="morphology" operator="dilate" :radius="pixelSize / 2" />
 
         </filter>
@@ -103,9 +89,8 @@ const gridStyle = computed(() => {
         <section id="hero" class="intro-section">
             <div :style="gridStyle" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                 <img 
-                    src="https://jdszekeres.github.io/title.gif" 
-                    style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;" 
-                    :style="{filter: `url('#pixelate-filter')`}"
+                    src="https://jdszekeres.github.io/project-photos/eagle_scout_2.JPG" 
+                    style="width: 100%; height: 100%; background-size: cover; position: absolute; top: 0; left: 0;" 
                    
                 />
             </div>
@@ -127,18 +112,7 @@ const gridStyle = computed(() => {
                     </GlassPanel>
                 </div>
             </div>
-
-            <!-- Social Links -->
-            <!-- <div class="social-links">
-                <ImageLink link="https://www.linkedin.com/in/jdszekeres" image="LI-logo.png" />
-                <ImageLink link="https://github.com/jdszekeres" image="github-mark.svg" />
-                <ImageLink link="https://github.com/CCA-AppDev" image="cca-appdev.png"/> 
-                <ImageLink link="https://leetcode.com/u/jdszekeres/" image="leetcode.png" />
-            </div> -->
-
-
         </section>
-
 
         <!-- About & Experience Section -->
         <section id="about" class="about-section" style="flex-direction: column; align-items: center; gap: 2rem">
@@ -267,7 +241,6 @@ const gridStyle = computed(() => {
                         description="Demonstrated exceptional understanding of computer science concepts, scoring a 5 on the official AP exam."
                         image="https://jdszekeres.github.io/company_logos/cca.png" />
                 </ul>
-
             </div>
         </section>
 
@@ -283,7 +256,7 @@ const gridStyle = computed(() => {
                 subtitle="Community service project for San Dieguito County Park"
                 description="Led a project to create a 15ft tall hanging sign with chains, wood slab, and natural materials for the entrance of the Nature Playground area at San Dieguito County Park. Managed a team of 10 volunteers, coordinated with park officials, and ensured the project met safety and quality standards. The sign enhances the park's entrance and provides a welcoming atmosphere for visitors."
                 image="https://jdszekeres.github.io/project-photos/eagle_scout.JPG"
-                skills="Project Management, Woodworking, Team Leadership" left="true" />
+                skills="Project Management, Woodworking, Team Leadership" left=true />
 
             <BigProject name="Smartlet Pending Patent"
                 subtitle='"Method and apparatus to supply DC power with variable voltage."'
@@ -297,17 +270,13 @@ const gridStyle = computed(() => {
                 link="https://astrophoto-tools.vercel.app/"
                 description="An offline website built for both pros and amateurs with HTML, CSS and Javascript to help plan and execute astrophotography sessions. The website was created as part of the Hack Club + NASA Stardance challenge, where it won the Super Star Project Award and I got to ask NASA Director Jared Isaacman about satelite light pollution and protecting the night sky."
                 image="https://jdszekeres.github.io/project-photos/astrophototools.png"
-                skills="Web Development, Service Workers, Mobile Optimization, UX/UI Design" left="true" />
-
+                skills="Web Development, Service Workers, Mobile Optimization, UX/UI Design" left=true />
             </section>
 
-        <!-- Projects Section -->
         <section id="projects" class="projects-section">
-            <!-- <Menu /> -->
             <h3>All Projects</h3>
             <p>Filter my projects by category</p>
 
-            <!-- Category Filters -->
             <div class="category-filters">
                 <button class="hobby" id="c" @click="filterProjects('c')">
                     <div id="hack">Computer Science</div>
@@ -319,19 +288,16 @@ const gridStyle = computed(() => {
                 <button class="hobby" @click="filterProjects('g')" id="g">Geography</button>
             </div>
 
-            <!-- Favorite Projects Filter -->
             <div class="favorites-filter">
                 <button class="hobby" id="fav" @click="filterProjects('fav')">My Favorite Projects</button>
             </div>
 
-            <!-- Projects Grid -->
             <div class="projects-grid">
                 <Project v-for="(p, index) in visibleProjects" :key="index" :skills="p.skills"
                     :categories="p.categories" :name="p.name" :link="p.link" :image="p.image"
                     :description="p.description" :repo="p.repo" />
             </div>
 
-            <!-- Load More Button -->
             <div v-if="hasMore" class="load-more">
                 <button @click="loadMoreProjects()" class="hobby load-more-btn">
                     Load More Projects
