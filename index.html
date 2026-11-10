@@ -19,27 +19,37 @@
     <!-- Preload critical fonts -->
     <link
       rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@500;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Roboto:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap"
       as="style"
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript
       ><link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@500;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Roboto:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap"
     /></noscript>
 
-    <title>My Projects</title>
+    <title>Jackson Szekeres | Computer Science &amp; Engineering Portfolio</title>
+    <meta name="description" content="Portfolio of Jackson Szekeres: computer science and engineering experience, featured projects (Window View, Eagle Scout project, Smartlet patent, Astrophotography Tools) and a filterable gallery of 35+ builds." />
+    <meta name="theme-color" content="#34308F" />
+    <link rel="canonical" href="https://jackson.canyoncrest.academy/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jackson.canyoncrest.academy/" />
+    <meta property="og:title" content="Jackson Szekeres | Computer Science &amp; Engineering Portfolio" />
+    <meta property="og:description" content="Experience, featured projects and a filterable gallery of 35+ computer science, aviation, 3D printing and geography builds." />
+    <meta property="og:image" content="https://jdszekeres.github.io/project-photos/eagle_scout_2.JPG" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body style="overflow-x: hidden">
     
     <div id="app"></div>
-  </body>
   <script src="src/main.js" type="module"></script>
   <script src="https://bundle.run/css-scroll-snap-polyfill@0.1.2"></script>
 
   <script>
-    cssScrollSnapPolyfill();
+    // Third-party CDN script: don't let an outage break the effects below.
+    if (typeof cssScrollSnapPolyfill === "function") cssScrollSnapPolyfill();
     class Messenger {
       constructor(el) {
         this.el = el;
@@ -144,10 +154,11 @@
 
     function updateBackground(element, progress) {
       style = element.style;
-      style.background = `linear-gradient(0deg,rgb(0,0,0) 0%,rgb(0, 0, 0) ${progress}%,rgb(255,255,255) ${
+      // "Printed" layer is the palette orange (#F28444), like filament
+      style.background = `linear-gradient(0deg,rgb(242,132,68) 0%,rgb(242,132,68) ${progress}%,rgb(255,255,255) ${
         progress + 0.01
       }%, rgb(255, 255, 255) 100%)`;
-      style.backgroundColor = "#000";
+      style.backgroundColor = "rgb(242,132,68)";
       style.backgroundSize = "100%";
       style.backgroundRepeat = "repeat";
 
@@ -167,4 +178,5 @@
       }, 50);
     }, 1000);
   </script>
+  </body>
 </html>

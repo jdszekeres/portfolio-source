@@ -111,7 +111,7 @@ export const projects = [
         categories: "c a fav",
         link: "https://github.com/jdszekeres/windowseat",
         image: "https://jdszekeres.github.io/project-photos/windowseat.jpg",
-        description: "A program that uses angled satelite imagery to simulate the view outside of a plane",
+        description: "A program that uses angled satellite imagery to simulate the view outside of a plane",
         repo: "https://github.com/jdszekeres/windowseat"
     },
     {
@@ -227,7 +227,7 @@ export const projects = [
         categories: "c g fav",
         link: "https://jdszekeres.github.io/virtualRealEstate/",
         image: "https://jdszekeres.github.io/project-photos/virtualRealEstate.png",
-        description: "A site that allow you to model a house or building on a piece of virtual land based on satelite imagery",
+        description: "A site that allow you to model a house or building on a piece of virtual land based on satellite imagery",
         repo: "https://github.com/jdszekeres/virtualRealEstate"
     },
     {
@@ -244,7 +244,7 @@ export const projects = [
         categories: "c g a fav",
         link: "https://top-down-geo-guesser.vercel.app/",
         image: "https://jdszekeres.github.io/project-photos/geo-guesser.png",
-        description: "A site similar to geo guesser, but it presents locations in the form of top-down satelite imagery",
+        description: "A site similar to geo guesser, but it presents locations in the form of top-down satellite imagery",
         repo: "https://github.com/jdszekeres/top-down-geo-guesser"
     },
     {
@@ -304,6 +304,6 @@ export const projects = [
         categories: "c a fav",
         link: "https://astrophoto-tools.vercel.app/",
         image: "https://jdszekeres.github.io/project-photos/astrophototools.png",
-        description: "An offline PWA to help plan and execute astrophotography sessions. The website was created as part of the Hack Club + NASA Stardance challenge, where it won the Super Star Project Award and I got to ask NASA Director Jared Isaacman about satelite light pollution and protecting the night sky."
+        description: "An offline PWA to help plan and execute astrophotography sessions. The website was created as part of the Hack Club + NASA Stardance challenge, where it won the Super Star Project Award and I got to ask NASA Director Jared Isaacman about satellite light pollution and protecting the night sky."
     }
 ];

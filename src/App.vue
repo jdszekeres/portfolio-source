@@ -1,12 +1,7 @@
 <script setup>
 // Component imports
 import Project from './components/project.vue';
-import ImageLink from './components/imagelink.vue';
-import PixelArray from './components/pixelArray.vue';
 import Menu from './components/Menu.vue';
-
-// Vue imports
-import { ref, computed } from 'vue';
 
 // Data and composable imports
 import { projects as projectsData } from './data/projects.js';
@@ -15,7 +10,6 @@ import { useProjects } from './composables/useProjects.js';
 import JobTile from './components/jobTile.vue';
 import BigProject from './components/bigProject.vue';
 import Skill from './components/skill.vue';
-import GlassPanel from './components/glassPanel.vue';
 
 import {
     IconBrandFlutter,
@@ -37,9 +31,6 @@ import {
 
 // Use the projects composable
 const {
-    projects,
-    filteredCategories,
-    filteredProjects,
     visibleProjects,
     hasMore,
     loadMoreProjects,
@@ -48,19 +39,20 @@ const {
 
 var pixelSize = 50; // Size of the pixel blocks for the pixelation effect
 // Animation to reduce pixelation over time. For some reason animate in <svg> does not work with vue, so I'm using this hacky setTimeout method to animate the pixelation effect.
+// Visitors who prefer reduced motion skip straight to the sharp image.
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (reduceMotion) pixelSize = 1;
 setTimeout(() => {
     for (var i = 0; i < 50 ; i++) {
         setTimeout(() => {
             const morphology = document.getElementById("morphology");
-            const rad = morphology.getAttribute("radius");
-            pixelSize = Math.max(1, morphology.getAttribute("radius") - 1); // Decrease pixel size gradually
-            morphology.setAttribute("radius", pixelSize);
-            if (pixelSize <= 1) {
+            if (!morphology) return; // filter already removed
+            const newSize = Math.max(1, morphology.getAttribute("radius") - 1); // Decrease pixel size gradually
+            morphology.setAttribute("radius", newSize);
+            if (newSize <= 1) {
                 morphology.parentElement.parentElement.remove(); // Remove the filter from the DOM when pixelation is complete
-                clearInterval();
             }
-            console.log("Pixel size:", pixelSize);
-        }, i * 10); // Adjust the speed of the animation by changing the multiplier
+        }, reduceMotion ? 0 : i * 10); // Adjust the speed of the animation by changing the multiplier
     }
 })
 
@@ -87,54 +79,58 @@ setTimeout(() => {
     <main>
         <!-- Hero Section -->
         <section id="hero" class="intro-section">
-            <div :style="gridStyle" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
-                <img 
-                    src="https://jdszekeres.github.io/project-photos/eagle_scout_2.JPG" 
-                    style="width: 100%; height: 100%; background-size: cover; position: absolute; top: 0; left: 0;" 
-                   
-                />
-            </div>
-            <GlassPanel width="100%" height="20%">
-                <h1 style="margin:0; padding: 0">Jackson Szekeres</h1>
-                <h2 style="margin:0">Computer Science and Engineering Portfolio</h2>
-            </GlassPanel>
+            <img
+                class="hero-photo"
+                src="https://jdszekeres.github.io/project-photos/eagle_scout_2.JPG"
+                alt="Jackson Szekeres at his Eagle Scout project"
+                fetchpriority="high"
+            />
+            <div class="hero-overlay" aria-hidden="true"></div>
 
-            
-            <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2rem;">
-                <div>
-                    <GlassPanel padding="8px">
-                    <p style="color: black; margin: 0">Scroll down to explore my work</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-chevron-down">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                    </GlassPanel>
+            <div class="hero-content">
+                <p class="hero-eyebrow">Computer Science &amp; Engineering Portfolio</p>
+                <h1 class="hero-name">Jackson Szekeres</h1>
+                <p class="hero-tagline">High school senior into computer science, aviation, geography and 3D printing.</p>
+                <div class="hero-actions">
+                    <a class="hero-btn hero-btn-primary" href="#select-project">See my projects</a>
+                    <a class="hero-btn" href="#experience">Experience</a>
                 </div>
             </div>
+
+            <a class="hero-scroll" href="#about" aria-label="Scroll to About">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </a>
         </section>
 
         <!-- About & Experience Section -->
-        <section id="about" class="about-section" style="flex-direction: column; align-items: center; gap: 2rem">
+        <section id="about" class="about-section" style="flex-direction: column; align-items: center; gap: 0.75rem">
             <Menu />
-            <div class="about-content" style="display: flex; flex-direction: column; gap: 1rem; width: 100%">
-                <h3 style="width: 100%">About</h3>
-                <div class="about-text emoji" style="font-size: x-large">
+            <div class="about-grid">
+                <div class="about-bio">
+                <h3>About</h3>
+                <div class="about-text emoji">
                     I am a senior in High School with an interest in Computer Science🧑‍💻, aviation✈️,
                     Geography🗺️, and 3D printing <img
                         src="https://emojis.slackmojis.com/emojis/images/1702933057/82860/3d-printer.png"
-                        style="width: 24px; height: 24px">. My favorite programming languages are
+                        alt="3D printer" class="inline-icon" style="width: 24px; height: 24px">. My favorite programming languages are
                     <code>Python && Javascript</code>, but I also know a bit of Dart, Swift, Assembly, Java, and Lua. If
                     I'm not glued to a screen, you can find me running🏃‍♂️, biking🚵, hiking🥾, skiing⛷️, exploring the
                     great outdoors🌄, taking photographs📷, or learning Spanish <img
-                        src="https://flagpedia.net/data/flags/h160/es.webp" style="height: 18px;"> and Hungarian <img
-                        src="https://flagpedia.net/data/flags/h160/hu.webp" style="height: 18px;">.
+                        src="https://flagpedia.net/data/flags/h160/es.webp" alt="Spanish flag" class="inline-icon"
+                        style="height: 18px;"> and Hungarian <img
+                        src="https://flagpedia.net/data/flags/h160/hu.webp" alt="Hungarian flag" class="inline-icon"
+                        style="height: 18px;">.
                 </div>
-                <h3 style="margin-bottom: 0px">Skills</h3>
+                </div>
+                <div class="about-skills">
+                <h3>Skills</h3>
                 <div>
                     <div>
-                        <h4 style="margin-top: 8px">Programming Languages</h4>
-                        <div style="display: flex; flex-wrap: wrap; justify-content: center">
+                        <h4>Programming Languages</h4>
+                        <div class="skill-row">
                             <Skill skill="Python">
                                 <IconBrandPython size="24" style="color: #3776AB;" />
                             </Skill>
@@ -142,7 +138,7 @@ setTimeout(() => {
                                 <IconBrandHtml5 size="24" style="color: #e34c26" />
                             </Skill>
                             <Skill skill="React">
-                                <IconBrandReact size="24" style="color: #61DBFB" />
+                                <IconBrandReact size="24" style="color: #087EA4" />
                             </Skill>
 
                             <Skill skill="Flutter">
@@ -151,7 +147,7 @@ setTimeout(() => {
 
                             <Skill skill="Swift">
                                 <IconBrandSwift size="24" style="color: #f05138" />
-                            </skill>
+                            </Skill>
 
                             <Skill skill="SQL">
                                 <IconFileTypeSql size="24" style="color: blue" />
@@ -174,7 +170,7 @@ setTimeout(() => {
 
                     <div>
                         <h4>Tools</h4>
-                        <div style="display: flex; flex-wrap: wrap; justify-content: center">
+                        <div class="skill-row">
                             <Skill skill="Firebase"> 
                                 <IconBrandFirebase size="24" style="color: #f5820d" />
                             </Skill>
@@ -191,7 +187,7 @@ setTimeout(() => {
                                 <IconBrandAppleFilled size="24" style="color: #666666" />
                             </Skill>
 
-                            <Skill skill="Android Studio & Android dev">
+                            <Skill skill="Android Studio">
                                 <IconBrandAndroid size="24" style="color: #7dbc3e" />
                             </Skill>
 
@@ -201,46 +197,61 @@ setTimeout(() => {
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </section>
 
         <section id="experience" class="experience-section">
             <div class="experience-content">
-                <h3>Past Experience</h3>
-                <ul class="experience-list">
-                    <JobTile title="Intern" company="Deep Water Exploration" timePeriod="2024, 2025"
-                        description="Developed industry-grade software solutions for defense and exploration applications."
-                        image="https://jdszekeres.github.io/company_logos/dwe.png" />
+                <h3>Experience</h3>
+                <div class="experience-groups">
+                    <div class="experience-group">
+                        <h4 class="experience-group-title">Work &amp; Internships</h4>
+                        <ul class="experience-list">
+                            <JobTile title="Assistant Code Coach" company="The Coder School" timePeriod="Summer 2026"
+                                description="Assisted young students in developing an understanding of advanced programming concepts like AI regressions and functional programming"
+                                image="https://jdszekeres.github.io/company_logos/tcs.png" />
 
-                    <JobTile title="Advanced Enginnering Student" company="Family Giving Tree" timePeriod="Fall 2025"
-                        description="Developed a RFID scanning system for Family Giving Tree, a Bay Area non-profit, as part of an in-school internship"
-                        image="https://jdszekeres.github.io/company_logos/fgt.png" />
+                            <JobTile title="Advanced Engineering Student" company="Family Giving Tree" timePeriod="Fall 2025"
+                                description="Developed a RFID scanning system for Family Giving Tree, a Bay Area non-profit, as part of an in-school internship"
+                                image="https://jdszekeres.github.io/company_logos/fgt.png" />
 
-                    <JobTile title="Assistant Code Coach" company="The Coder School" timePeriod="Summer 2026"
-                        description="Assisted young students in developing an understanding of advanced programming concepts like AI regressions and functional programming"
-                        image="https://jdszekeres.github.io/company_logos/tcs.png" />
+                            <JobTile title="Intern" company="Deep Water Exploration" timePeriod="2024, 2025"
+                                description="Developed industry-grade software solutions for defense and exploration applications."
+                                image="https://jdszekeres.github.io/company_logos/dwe.png" />
+                        </ul>
+                    </div>
 
-                    <JobTile title="President" company="CCA Hack Club" timePeriod="2023 - Present"
-                        description="Hosted and competed in hackathons, organized coding events, and fostered a collaborative environment for club members."
-                        image="https://jdszekeres.github.io/company_logos/appdev.png" />
+                    <div class="experience-group">
+                        <h4 class="experience-group-title">Leadership</h4>
+                        <ul class="experience-list">
+                            <JobTile title="President" company="CCA Hack Club" timePeriod="2023 - Present"
+                                description="Hosted and competed in hackathons, organized coding events, and fostered a collaborative environment for club members."
+                                image="https://jdszekeres.github.io/company_logos/appdev.png" />
 
+                            <JobTile title="CEO" company="Smart DC Solutions" timePeriod="2023 - Present"
+                                description="Led a diverse team of peers to develop a novel, patent pending solution for blackouts and power efficiency."
+                                image="https://jdszekeres.github.io/company_logos/sds.png" />
 
-                    <JobTile title="CEO" company="Smart DC Solutions" timePeriod="2023 - Present"
-                        description="Led a diverse team of peers to develop a novel, patent pending solution for blackouts and power efficiency."
-                        image="https://jdszekeres.github.io/company_logos/sds.png" />
+                            <JobTile title="CTO" company="Compete for Causes" timePeriod="2023 - Present"
+                                description="Led the development of a platform connecting physical activities with charitable causes."
+                                image="https://jdszekeres.github.io/company_logos/cfc.png" />
+                        </ul>
+                    </div>
 
-                    <JobTile title="CTO" company="Compete for Causes" timePeriod="2023 - Present"
-                        description="Led the development of a platform connecting physical activities with charitable causes."
-                        image="https://jdszekeres.github.io/company_logos/cfc.png" />
+                    <div class="experience-group">
+                        <h4 class="experience-group-title">Coursework</h4>
+                        <ul class="experience-list">
+                            <JobTile title="AP Computer Science Principles Student" company="CCA" timePeriod="Spring 2025"
+                                description="Demonstrated exceptional understanding of computer science concepts, scoring a 5 on the official AP exam."
+                                image="https://jdszekeres.github.io/company_logos/cca.png" />
 
-                    <JobTile title="Exploring Computer Science Student" company="CCA" timePeriod="Spring 2025"
-                        description="Engaged in hands-on projects and collaborative learning experiences with focus on HCI interactions and web app development."
-                        image="https://jdszekeres.github.io/company_logos/cca.png" />
-
-                    <JobTile title="AP Computer Science Principles Student" company="CCA" timePeriod="Spring 2025"
-                        description="Demonstrated exceptional understanding of computer science concepts, scoring a 5 on the official AP exam."
-                        image="https://jdszekeres.github.io/company_logos/cca.png" />
-                </ul>
+                            <JobTile title="Exploring Computer Science Student" company="CCA" timePeriod="Spring 2025"
+                                description="Engaged in hands-on projects and collaborative learning experiences with focus on HCI interactions and web app development."
+                                image="https://jdszekeres.github.io/company_logos/cca.png" />
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -249,27 +260,27 @@ setTimeout(() => {
             <BigProject name="Window View" link="https://apps.apple.com/us/app/window-view/id6740445055"
                 subtitle="iOS app to view POIs offline"
                 description="An app built in Flutter to view points of interest on the go, without internet using a database of over 200,000 POIs worldwide and a custom built flight plan generator. The app is in part inspired by 'Flying Over Places' feature of Flight Path 3D's maps. The project has nearly 250 downloads and has made $10 in ad revenue so far. The app builds off skills learned from Exploring Computer Science, including firebase and HCI design principles."
-                image="https://jdszekeres.github.io/project-photos/windowViewWide.png"
+                image="https://jdszekeres.github.io/project-photos/windowViewWide.png" letterbox
                 skills="App Development, Flutter, AI Assisted Programming, Google AdMob" />
 
             <BigProject name="Eagle Scout Project" link="https://www.scouting.org/about/research/eagle-scouts/"
                 subtitle="Community service project for San Dieguito County Park"
                 description="Led a project to create a 15ft tall hanging sign with chains, wood slab, and natural materials for the entrance of the Nature Playground area at San Dieguito County Park. Managed a team of 10 volunteers, coordinated with park officials, and ensured the project met safety and quality standards. The sign enhances the park's entrance and provides a welcoming atmosphere for visitors."
-                image="https://jdszekeres.github.io/project-photos/eagle_scout.JPG"
+                image="https://jdszekeres.github.io/project-photos/eagle_scout.JPG" letterbox
                 skills="Project Management, Woodworking, Team Leadership" left=true />
 
-            <BigProject name="Smartlet Pending Patent"
+            <BigProject name="Smartlet Patent"
                 subtitle='"Method and apparatus to supply DC power with variable voltage."'
-                link="https://patents.google.com/patent/US20240421609A1/en"
+                link="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/12744395"
                 description="Led a team of peers to develop a novel solution for improving power efficiency and safety, increasing IoT integration, and preventing blackouts in residential and commercial buildings. The Smartlet system intelligently manages DC power distribution, optimizing energy usage and reducing strain on the electrical grid. The project is currently patent pending and has garnered interest from industry professionals at the Open Sauce 2025 Convention."
-                image="https://jdszekeres.github.io/project-photos/patent.jpg"
+                image="https://jdszekeres.github.io/project-photos/patent.jpg" letterbox
                 skills="Electrical Engineering, Team Leadership, Innovation, Technical Writing" />
         
             <BigProject name="Astrophotography Tools"
                 subtitle="An offline website to capture the night sky"
                 link="https://astrophoto-tools.vercel.app/"
-                description="An offline website built for both pros and amateurs with HTML, CSS and Javascript to help plan and execute astrophotography sessions. The website was created as part of the Hack Club + NASA Stardance challenge, where it won the Super Star Project Award and I got to ask NASA Director Jared Isaacman about satelite light pollution and protecting the night sky."
-                image="https://jdszekeres.github.io/project-photos/astrophototools.png"
+                description="An offline website built for both pros and amateurs with HTML, CSS and Javascript to help plan and execute astrophotography sessions. The website was created as part of the Hack Club + NASA Stardance challenge, where it won the Super Star Project Award and I got to ask NASA Director Jared Isaacman about satellite light pollution and protecting the night sky."
+                image="https://jdszekeres.github.io/project-photos/astrophototools.png" letterbox
                 skills="Web Development, Service Workers, Mobile Optimization, UX/UI Design" left=true />
             </section>
 
@@ -313,22 +324,172 @@ setTimeout(() => {
 
 .intro-section {
     height: 100vh;
+    height: 100svh; /* excludes mobile browser toolbars */
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: space-between;
-    justify-content: space-between;
-    text-align: center;
-    
-
+    align-items: flex-end;
     padding: 0;
     margin: 0;
+    overflow: hidden;
+    text-align: left;
+}
+
+/* ========================================
+   HERO
+   Text is always white on the dark gradient, independent of colour scheme.
+======================================== */
+
+.hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center 30%;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    /* Flat indigo tint over the whole photo (no gradient) */
+    background: rgba(30, 27, 92, 0.55);
+}
+
+.hero-content {
+    position: relative;
+    max-width: 720px;
+    padding: 0 clamp(1.25rem, 6vw, 5rem) clamp(4.5rem, 12vh, 7rem);
+    color: #fff;
+    /* keeps small text legible over the brighter parts of the photo */
+    text-shadow: 0 1px 10px rgba(20, 18, 60, 0.85);
+}
+
+.hero-eyebrow {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-mono);
+    font-size: clamp(0.8rem, 2.6vw, 0.95rem);
+    letter-spacing: 0.04em;
+    color: var(--accent);
+}
+
+.hero-name {
+    margin: 0;
+    width: auto;
+    text-align: left;
+    font-size: clamp(2.75rem, 10vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35), 0 0 28px var(--glow);
+}
+
+.hero-tagline {
+    margin: 1rem 0 0;
+    max-width: 34ch;
+    font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.hero-btn:hover {
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.hero-btn-primary {
+    /* solid pink; dark indigo text is 4.6:1 */
+    background-color: var(--pink);
+    border-color: var(--pink);
+    color: var(--indigo-deep);
+    font-weight: 700;
+    text-shadow: none;
+}
+
+.hero-btn-primary:hover {
+    background-color: var(--amber);
+    border-color: var(--amber);
+}
+
+.hero-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 1.25rem;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.85);
+    animation: hero-bounce 2s ease-in-out infinite;
+}
+
+@keyframes hero-bounce {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-scroll {
+        animation: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hero-content {
+        text-align: center;
+        margin: 0 auto;
+    }
+    .hero-name {
+        text-align: center;
+    }
+    .hero-tagline {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .hero-actions {
+        justify-content: center;
+    }
 }
 
 .about-section {
-    height: 100vh;
+    /* Grow with content (global section rule gives min-height: 100vh);
+       a fixed 100vh made the bio + skills spill into Experience. */
+    height: auto;
     display: flex;
     gap: 2rem;
+}
+
+/* Compact layout for About + Experience: size to content instead of the
+   global one-screen minimum, with tighter headings and spacing. */
+.about-section,
+.experience-section {
+    min-height: 0;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.about-section h3,
+.experience-section h3 {
+    font-size: 28px;
+    margin: 0.5rem 0;
+}
+
+.about-section h4 {
+    margin: 0.5rem 0 0.25rem;
 }
 
 .about-content,
@@ -353,8 +514,7 @@ setTimeout(() => {
 
 h1 {
     font-weight: 800;
-    font-size: 64px;
-    font-family: "roboto";
+    font-size: clamp(2.5rem, 9vw, 4rem);
     width: 100%;
     text-align: center;
     margin-bottom: 2rem;
@@ -372,8 +532,15 @@ h3 {
 
 .about-text {
     text-align: left;
-    line-height: 1.6;
-    font-size: 1.1rem;
+    line-height: 1.55;
+    font-size: 1.15rem;
+    /* Keep the bio a readable measure instead of spanning the whole window */
+    max-width: 65ch;
+    margin: 0 auto;
+}
+
+.about-text .inline-icon {
+    vertical-align: middle;
 }
 
 /* ========================================
@@ -400,14 +567,85 @@ h3 {
     object-fit: contain;
 }
 
-.experience-list {
-    list-style-type: none;
-    padding: 0;
-    line-height: 1.8;
+/* About: bio and skills side by side on wide screens, stacked on narrow ones */
+.about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 1rem 3rem;
+    align-items: start;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    text-align: left;
 }
 
-.experience-list li {
-    margin-bottom: 1rem;
+.about-grid h3 {
+    text-align: left;
+}
+
+.about-grid .about-text {
+    max-width: none;
+    margin: 0;
+}
+
+.about-skills h4 {
+    text-align: left;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.skill-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0 -4px;
+}
+
+/* Experience: grouped by kind, one column per group on wide screens */
+.experience-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 1.5rem 2.5rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.experience-group-title {
+    margin: 0 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(217, 123, 173, 0.45);
+    color: var(--accent);
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.experience-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (max-width: 900px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+    .about-grid h3,
+    .about-skills h4 {
+        text-align: center;
+    }
+    .skill-row {
+        justify-content: center;
+    }
 }
 
 /* ========================================
@@ -432,45 +670,67 @@ h3 {
     margin: 10px;
     padding: 10px;
     font-size: 22px;
-    background: none;
-    outline: 3px solid black;
-    border: 0px;
+    font-weight: 500;
+    /* Borderless square tiles: a soft fill instead of a heavy outline */
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    border: 0;
+    border-radius: 0;
+    padding: 10px 18px;
     height: 50.4px;
     position: relative;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hobby:hover {
-    background-color: rgba(120, 255, 120, 0.1);
+    background-color: rgba(242, 82, 125, 0.22);
 }
 
 .selected {
-    outline: 3px solid rgb(120, 255, 120);
+    background-color: rgba(242, 82, 125, 0.38);
+    box-shadow: 0 0 18px var(--glow);
 }
 
 /* Category-specific styles */
 #c {
-    color: rgb(120, 255, 120);
+    color: #6EC6FF; /* sky blue, 4.6:1 on the tile */
     min-width: 250px;
 }
 
 #hack {
-    font-family: monospace;
+    font-family: var(--font-mono);
     font-size: 20px;
     white-space: nowrap;
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.9);
 }
 
 #g {
-    background-image: url("geography.gif");
+    /* Light scrim + strong text shadow: label stays readable but the animated GIF still shows */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("geography.gif");
     background-size: cover;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 1), 0 0 8px rgba(0, 0, 0, 0.8);
 }
 
+/* 3D printing: index.html's print animation overwrites this button's background
+   (clipped to the text), so its tile fill is drawn with an inset shadow instead. */
+[id="3"] {
+    box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.08);
+}
+[id="3"]:hover {
+    box-shadow: inset 0 0 0 100px rgba(242, 82, 125, 0.22);
+}
+[id="3"].selected {
+    box-shadow: inset 0 0 0 100px rgba(242, 82, 125, 0.38), 0 0 18px var(--glow);
+}
+
+/* Aviation: striped landing-pad bottom edge */
 .landing-pad {
     border-bottom: 5px solid;
-    border-image: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 5%, rgba(254, 255, 0, 1) 5.01%, rgba(254, 255, 0, 1) 10%, rgba(0, 0, 0, 1) 10.01%, rgba(0, 0, 0, 1) 15%, rgba(254, 255, 0, 1) 15.01%, rgba(254, 255, 0, 1) 20%, rgba(0, 0, 0, 1) 20.01%, rgba(0, 0, 0, 1) 25%, rgba(254, 255, 0, 1) 25.01%, rgba(254, 255, 0, 1) 30%, rgba(0, 0, 0, 1) 30.01%, rgba(0, 0, 0, 1) 35%, rgba(254, 255, 0, 1) 35.01%, rgba(254, 255, 0, 1) 40%, rgba(0, 0, 0, 1) 40.01%, rgba(0, 0, 0, 1) 45%, rgba(254, 255, 0, 1) 45.01%, rgba(254, 255, 0, 1) 50%, rgba(0, 0, 0, 1) 50.01%, rgba(0, 0, 0, 1) 55%, rgba(254, 255, 0, 1) 55.01%, rgba(253, 255, 0, 1) 60%, rgba(0, 0, 0, 1) 60.01%, rgba(0, 0, 0, 1) 65%, rgba(243, 255, 0, 1) 65.01%, rgba(244, 255, 0, 1) 70%, rgba(0, 0, 0, 1) 70.01%, rgba(0, 0, 0, 1) 75%, rgba(254, 255, 0, 1) 75.01%, rgba(254, 255, 0, 1) 80%, rgba(0, 0, 0, 1) 80.01%, rgba(0, 0, 0, 1) 85%, rgba(250, 255, 0, 1) 85.01%, rgba(250, 255, 0, 1) 90%, rgba(0, 0, 0, 1) 90.01%, rgba(0, 0, 0, 1) 95%, rgba(250, 255, 0, 1) 95.01%, rgba(249, 255, 0, 1) 100%) 1;
+    border-image: linear-gradient(90deg, rgba(30, 27, 92, 1) 0%, rgba(30, 27, 92, 1) 5%, rgba(242, 154, 46, 1) 5.01%, rgba(242, 154, 46, 1) 10%, rgba(30, 27, 92, 1) 10.01%, rgba(30, 27, 92, 1) 15%, rgba(242, 154, 46, 1) 15.01%, rgba(242, 154, 46, 1) 20%, rgba(30, 27, 92, 1) 20.01%, rgba(30, 27, 92, 1) 25%, rgba(242, 154, 46, 1) 25.01%, rgba(242, 154, 46, 1) 30%, rgba(30, 27, 92, 1) 30.01%, rgba(30, 27, 92, 1) 35%, rgba(242, 154, 46, 1) 35.01%, rgba(242, 154, 46, 1) 40%, rgba(30, 27, 92, 1) 40.01%, rgba(30, 27, 92, 1) 45%, rgba(242, 154, 46, 1) 45.01%, rgba(242, 154, 46, 1) 50%, rgba(30, 27, 92, 1) 50.01%, rgba(30, 27, 92, 1) 55%, rgba(242, 154, 46, 1) 55.01%, rgba(242, 154, 46, 1) 60%, rgba(30, 27, 92, 1) 60.01%, rgba(30, 27, 92, 1) 65%, rgba(242, 154, 46, 1) 65.01%, rgba(242, 154, 46, 1) 70%, rgba(30, 27, 92, 1) 70.01%, rgba(30, 27, 92, 1) 75%, rgba(242, 154, 46, 1) 75.01%, rgba(242, 154, 46, 1) 80%, rgba(30, 27, 92, 1) 80.01%, rgba(30, 27, 92, 1) 85%, rgba(242, 154, 46, 1) 85.01%, rgba(242, 154, 46, 1) 90%, rgba(30, 27, 92, 1) 90.01%, rgba(30, 27, 92, 1) 95%, rgba(242, 154, 46, 1) 95.01%, rgba(242, 154, 46, 1) 100%) 1;
 }
+
 
 /* ========================================
    ANIMATIONS
@@ -901,7 +1161,13 @@ h3 {
 }
 
 .load-more-btn {
-    background: rgba(120, 255, 120, 0.2) !important;
+    background: var(--pink) !important;
+    color: var(--indigo-deep);
+    font-weight: 700;
+}
+
+.load-more-btn:hover {
+    background: var(--amber) !important;
 }
 
 /* ========================================
@@ -909,10 +1175,6 @@ h3 {
 ======================================== */
 
 @media screen and (max-width: 768px) {
-    .intro-section {
-        padding: 1rem;
-    }
-
     .about-section {
         flex-direction: column;
         height: auto;
@@ -928,9 +1190,6 @@ h3 {
         text-align: center;
     }
 
-    h1 {
-        font-size: 48px;
-    }
 
     .hobby {
         width: 100%;

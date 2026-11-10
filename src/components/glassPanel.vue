@@ -31,7 +31,9 @@
 <style scoped>
 .glass-panel {
   /* 1. Semi-transparent background color */
-  background: rgba(255, 255, 255, 0.258); 
+  /* Opaque enough that the dark text inside stays readable over bright sky. */
+  background: rgba(255, 255, 255, 0.62);
+  color: #111;
   
   /* 2. The magic property: blurs the area BEHIND the panel */
   backdrop-filter: blur(4px) saturate(180%);

@@ -1,25 +1,82 @@
-/* Remove blocking font import and use system fallbacks */
-@media (prefers-color-scheme: dark) {
-    body {
-        background: rgb(47,52,84);
-        background: radial-gradient(circle, rgba(47,52,84,1) 0%, rgba(68,82,120,1) 100%);
-        color: rgb(23, 23, 23);
-    }
+/* ========================================
+   DESIGN TOKENS — synthwave palette
+   #34308F indigo · #F2527D pink · #D97BAD orchid · #F29A2E amber · #F28444 orange
+   One theme for both light and dark mode. Contrast ratios are against
+   #34308F, the lightest point of the background.
+======================================== */
+:root {
+  --font-sans: "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+  --font-mono: "Fira Code", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+
+  /* palette */
+  --indigo: #34308F;
+  --indigo-deep: #1E1B5C;  /* darker shade of the indigo, for gradient edges and text on bright fills */
+  --pink: #F2527D;         /* 3.2:1 — large text (titles), glows and borders only */
+  --orchid: #D97BAD;       /* 3.8:1 — outlines and dividers */
+  --amber: #F29A2E;        /* 4.8:1 — safe for normal-size text */
+  --orange: #F28444;       /* 4.2:1 — fills and large text */
+
+  /* roles */
+  --bg-inner: var(--indigo);
+  --bg-outer: var(--indigo-deep);
+  --text: #FBF4FF;         /* 9.9:1 */
+  --text-muted: #E3D4EE;   /* 7.6:1 */
+  --link: var(--amber);
+  --accent: var(--amber);
+  --title-accent: var(--pink);
+  --glow: rgba(242, 82, 125, 0.55);
 }
-@media (prefers-color-scheme: light) {
-    body {
-        background: rgb(111,123,200);
-        background: radial-gradient(circle, rgba(111,123,200,1) 0%, rgba(96,122,190,1) 100%);
-        color: white
-    }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-outer);
+  background: radial-gradient(circle, var(--bg-inner) 0%, var(--bg-outer) 100%);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Neon glow on section headings */
+h1, h3 {
+  text-shadow: 0 0 18px var(--glow);
+}
+
+/* Small mono labels (sub-headings, company lines, card titles) */
+h4, code {
+  font-family: var(--font-mono);
+}
+
+button {
+  font: inherit;
+  color: inherit;
 }
 
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: var(--link);
   transition: 0.4s;
 }
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .pulse {
   display: block !important;
   animation: pulse 5s ease-in-out infinite;
@@ -34,10 +91,6 @@ a,
   100% {
     transform: scale(1.2) translate(0,0);
   }
-}
-body {
-  margin: 0;
-  padding: 0;
 }
 
 main {
@@ -54,17 +107,6 @@ section {
   scroll-snap-align: start;
   text-align: center;
   position: relative;
-}
-/* Optimize font loading with fallbacks */
-@font-face {
-  font-family: 'Roboto Condensed';
-  src: url(Roboto-Condensed.ttf);
-  unicode-range: U+0030-007F;
-  font-display: swap;
-}
-
-.emoji {
-  font-family: "Roboto Condensed", "Roboto", "Arial", system-ui, "Noto Color Emoji";
 }
 
 /* Add image optimization */

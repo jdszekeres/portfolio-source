@@ -16,7 +16,6 @@
     width: 100%;
     display: flex;
     gap: 1rem;
-    margin-left: 1rem;
     height: fit-content;
     align-items: center;
     justify-content: center;
@@ -32,7 +31,7 @@
 }
 
 .menu-item:hover {
-    background-color: rgba(120, 255, 120, 0.2);
+    background-color: rgba(242, 82, 125, 0.25);
 }
 
 @media screen and (max-width: 768px) {

@@ -1,53 +1,75 @@
 <script setup>
-    const props = defineProps({
-        title: String,
-        company: String,
-        timePeriod: String,
-        description: String,
-        image: String
-    })
-
-    import {ref} from 'vue';
-    const hasImage = ref(false);
-    if (props.image && props.image !== '') {
-        hasImage.value = true;
-    }
+defineProps({
+    title: String,
+    company: String,
+    timePeriod: String,
+    description: String,
+    image: String
+})
 </script>
 
 <template>
-    <div class="job-tile">
-        
-        <div>
-            <div style="display: flex; flex-direction: row; align-items: center; max-height: 10vh; justify-content: center; width: 100%;">
-                <img :src="image" v-if="hasImage" :alt="'Company logo for '+company" loading="lazy" decoding="async" style="width: 50px; height: 50px; margin-right: 10px;" />
-            <div>
-                <h2>{{title}}</h2>
-                <h4>{{company}} | {{timePeriod}}</h4>
-            </div>
-            </div>
-            <div style="width: 100%; display: flex; justify-content: center;">
-                <div style="width: 60%">
-                    <p>{{description}}</p>
-                </div>
-            </div>
+    <li class="job-tile">
+        <img v-if="image" class="job-logo" :src="image" :alt="'Company logo for ' + company"
+            width="56" height="56" loading="lazy" decoding="async" />
+        <div class="job-body">
+            <h4 class="job-title">{{ title }}</h4>
+            <p class="job-meta">{{ company }} <span aria-hidden="true">|</span> {{ timePeriod }}</p>
+            <p class="job-description">{{ description }}</p>
         </div>
-    </div>
+    </li>
 </template>
 
 <style scoped>
-    div > h2, div > h4, div > p {
-        margin: 0;
+.job-tile {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    text-align: left;
+}
+
+.job-logo {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+}
+
+.job-body {
+    min-width: 0;
+}
+
+.job-title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text);
+}
+
+.job-meta {
+    margin: 0.2rem 0 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.job-description {
+    margin: 0;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+@media screen and (max-width: 480px) {
+    .job-logo {
+        width: 40px;
+        height: 40px;
     }
 
-    h2, h4, p {
-        color: #ccc;
+    .job-title {
+        font-size: 1.15rem;
     }
-
-    h2, p {
-        font-family: sans-serif;
-    }
-    p {
-        font-weight: 400;
-    }
-
+}
 </style>
